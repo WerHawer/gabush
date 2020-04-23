@@ -1,7 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const button = () => (
-    
+const Button = ({ type = "button", children, onClick, customClass }) => (
+  <button
+    className={`basicButton ${customClass}`}
+    type={type}
+    onClick={onClick}
+  >
+    {children}
+  </button>
 );
 
-export default button;
+export default Button;

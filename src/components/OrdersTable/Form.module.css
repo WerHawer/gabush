@@ -1,5 +1,5 @@
 .table {
-  width: 100%;
+  width: 72%;
   max-width: 1060px;
 }
 
@@ -15,10 +15,11 @@
 }
 
 .main {
-  height: 240px;
-  max-height: 240px;
+  min-height: 240px;
+  max-height: 60vh;
   background-color: #f6f6f6;
   overflow: auto;
+  margin-bottom: 50px;
 }
 
 .headElement,
