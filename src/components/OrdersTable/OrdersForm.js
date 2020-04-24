@@ -3,10 +3,10 @@ import FormHeader from "./FormHeader";
 import MainForm from "./MainForm";
 import css from "./Form.module.css";
 
-const OrdersForm = () => (
+const OrdersForm = ({ orders }) => (
   <table className={css.table}>
     <FormHeader />
-    <MainForm />
+    <MainForm orders={orders} />
   </table>
 );
 

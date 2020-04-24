@@ -2,6 +2,9 @@ const menu = [
   {
     id: 1,
     name: "Грецький",
+    mount: 0,
+    img:
+      "https://i.obozrevatel.com/food/recipemain/2018/11/15/screenshot81.webp?size=600x400",
     ingridients: {
       "Огірки свіжі": 35,
       Помідори: 40,
@@ -14,6 +17,9 @@ const menu = [
   {
     id: 2,
     name: "Столичний",
+    mount: 0,
+    img:
+      "https://img07.rl0.ru/eda/1200x-i/s2.eda.ru/StaticContent/Photos/110816122019/140416222409/p_O.jpg",
     ingridients: {
       "Огірки свіжі": 15,
       "Яйце куряче": 30,
@@ -27,6 +33,9 @@ const menu = [
   {
     id: 3,
     name: "Ніжний",
+    mount: 0,
+    img:
+      "https://alimero.ru/uploads/images/00/65/50/2018/02/04/cd8d0f_wmark.jpg",
     ingridients: {
       "Огірки свіжі": 30,
       Гриби: 30,

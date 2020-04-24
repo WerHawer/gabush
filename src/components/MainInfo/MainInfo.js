@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import flatpickr from "flatpickr";
 import { Link } from "react-router-dom";
-import DatePicker from "../DatePicker/DatePicker";
 import OrdersForm from "../OrdersTable/OrdersForm";
 import Button from "../UI/Button";
+import Input from "../UI/Input";
 
 export default class MainInfo extends Component {
-  state = { input: null };
+  state = { input: null, filteredOrders: [] };
 
   componentDidMount() {
     this.setState({ input: document.querySelector("#dataPicker") });
@@ -14,23 +14,25 @@ export default class MainInfo extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.input !== this.state.input) {
-      const calendar = flatpickr("#dataPicker", {
+      flatpickr("#dataPicker", {
         mode: "range",
         inline: true,
-
+        dateFormat: "d.m.Y",
         onChange: function (selectedDates, dateStr, instance) {
           //отправка запроса с выбранной датой. Фильтровать по выбору только одной даты.
         },
       });
-
-      this.setState({ input: document.querySelector("#dataPicker") });
     }
   }
   render() {
+    const { filteredOrders } = this.state;
     return (
-      <div className="wrapper">
-        <DatePicker />
-        <OrdersForm />
+      <div className="wrapper mainPage-wrapper">
+        <div className="datePickerWrapper">
+          <Input customClass="none" type="text" id="dataPicker" />
+        </div>
+
+        <OrdersForm orders={filteredOrders} />
         <Link
           to={{
             pathname: "/newOrder",
