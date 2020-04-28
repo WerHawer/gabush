@@ -1,5 +1,5 @@
 .table {
-  width: 70%;
+  flex-grow: 1;
   max-width: 1060px;
 }
 
@@ -23,10 +23,15 @@
   margin-bottom: 50px;
 }
 
+.tableContainer {
+  display: flex;
+  width: 100%;
+}
+
 .headElement,
 .mainElement {
-  width: 7.75%;
   display: block;
+  width: 7.75%;
   padding: 2px 0;
   min-height: 40px;
   max-height: 57px;
@@ -37,6 +42,8 @@
 }
 
 .mainElement {
+  display: flex;
+  align-items: center;
   min-height: 57px;
   font-size: 20px;
 }
@@ -62,6 +69,7 @@
 .headElement:first-child,
 .mainElement:first-child {
   border-left: none;
+  justify-content: center;
 }
 
 .headElement:nth-child(3),
@@ -71,14 +79,20 @@
 }
 
 .mainElement:nth-child(3) {
-  text-align: left;
   padding-left: 20px;
+}
+.mainElement:nth-child(4) {
+  justify-content: center;
 }
 
 .headElement:last-child,
 .mainElement:last-child {
   flex-grow: 1;
   line-height: 35px;
+}
+
+.mainElement:last-child {
+  padding-left: 20px;
 }
 
 .headElement:nth-child(2) {

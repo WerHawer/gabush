@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MenuElement from "./MenuElement";
 import OrderList from "./OrderList";
 import Button from "../UI/Button";
@@ -13,11 +13,27 @@ const MenuList = ({
   onSaveClick,
   notificationOk,
   orderIsReady,
+  ressetMenu,
 }) => (
   <>
-    {orderIsReady && <Notification onClick={notificationOk} />}
+    {orderIsReady && (
+      <Notification
+        onClick={() => {
+          notificationOk();
+          ressetMenu();
+        }}
+      />
+    )}
 
     <div className="menu-list__wrapper">
+      <Link
+        to="/home"
+        className="newOrder__toMain-link"
+        onClick={() => ressetMenu()}
+      >
+        <Button type="button">На главнаю</Button>
+      </Link>
+
       <ul className="menu-list">
         {menu.map((el) => (
           <MenuElement key={el.id} el={el} onClick={onClick} />
@@ -30,7 +46,7 @@ const MenuList = ({
         onClick={() => onSaveClick(filteredMenu)}
         customClass="menu-list__saveBtn"
       >
-        Save
+        сохранить
       </Button>
     </div>
 

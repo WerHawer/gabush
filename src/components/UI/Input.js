@@ -10,16 +10,19 @@ const Input = ({
   customClass,
   placeholder,
 }) => (
-  <input
-    ref={reff}
-    className={`basicInput ${customClass}`}
-    id={id}
-    type={type}
-    value={value}
-    name={name}
-    onChange={onChange}
-    placeholder={placeholder}
-  />
+  <>
+    {/* <label htmlFor={id}>{placeholder}</label> */}
+    <input
+      ref={reff}
+      className={`basicInput ${customClass}`}
+      id={id}
+      type={type}
+      value={value}
+      name={name}
+      onChange={onChange}
+      placeholder={placeholder}
+    />
+  </>
 );
 
 export default Input;

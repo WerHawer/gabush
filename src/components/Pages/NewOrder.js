@@ -1,11 +1,16 @@
 import React, { Component, createRef } from "react";
+import { Link } from "react-router-dom";
 import flatpickr from "flatpickr";
 import shortid from "shortid";
+import Inputmask from "inputmask";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 import MenuList from "../MenuList/MenuList";
+import Select from "../UI/Select";
+import rooms from "../../data/rooms";
 
 const dateInput = createRef();
+const telInput = createRef();
 
 export default class NewOrder extends Component {
   state = {
@@ -16,7 +21,7 @@ export default class NewOrder extends Component {
     name: "",
     tel: "",
     guests: "",
-    room: "",
+    room: 1,
     comment: "",
     selectedDates: [],
     order: {
@@ -43,6 +48,8 @@ export default class NewOrder extends Component {
     });
 
     this.setState({ dateInput: dateInput.current });
+
+    Inputmask("+38 (099) 999-99-99").mask(telInput);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -143,7 +150,7 @@ export default class NewOrder extends Component {
       orderIsReady,
       guests,
     } = this.state;
-    const { menu } = this.props;
+    const { menu, ressetMenu } = this.props;
 
     const filteredMenu = this.filter(menu);
     return (
@@ -152,6 +159,7 @@ export default class NewOrder extends Component {
           {!isPrevInfoSave && (
             <form onSubmit={this.handleSubmit} className="consumer-form">
               <Input
+                customClass="consumer-form__input"
                 reff={dateInput}
                 type="text"
                 name="date"
@@ -160,6 +168,7 @@ export default class NewOrder extends Component {
                 onChange={this.handleChange}
               />
               <Input
+                customClass="consumer-form__input"
                 type="text"
                 name="name"
                 value={name}
@@ -167,20 +176,24 @@ export default class NewOrder extends Component {
                 onChange={this.handleChange}
               />
               <Input
+                customClass="consumer-form__input"
+                reff={telInput}
                 type="text"
                 name="tel"
                 value={tel}
                 placeholder="Телефон клиента"
                 onChange={this.handleChange}
               />
-              <Input
-                type="text"
+              <Select
+                customClass="consumer-form__input"
                 name="room"
+                options={rooms}
                 value={room}
                 placeholder="Зал заказа"
                 onChange={this.handleChange}
               />
               <Input
+                customClass="consumer-form__input"
                 type="number"
                 name="guests"
                 value={guests}
@@ -188,6 +201,7 @@ export default class NewOrder extends Component {
                 onChange={this.handleChange}
               />
               <Input
+                customClass="consumer-form__input"
                 type="text"
                 name="comment"
                 value={comment}
@@ -195,14 +209,23 @@ export default class NewOrder extends Component {
                 onChange={this.handleChange}
               />
 
-              <Button type="submit" customClass="saveConsumerBtn">
-                Save
-              </Button>
+              <div className="newOrder__btn-container">
+                <Link to="/home">
+                  <Button type="button" className=" saveConsumerBtn">
+                    Главная
+                  </Button>
+                </Link>
+
+                <Button type="submit" customClass="saveConsumerBtn">
+                  Дальше
+                </Button>
+              </div>
             </form>
           )}
 
           {isPrevInfoSave && (
             <MenuList
+              ressetMenu={ressetMenu}
               notificationOk={this.orderIsReadyResset}
               orderIsReady={orderIsReady}
               onSaveClick={this.handleSaveDishes}

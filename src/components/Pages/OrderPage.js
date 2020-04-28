@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as localStorage from "../utils/localStorage";
 import ConsumerInfo from "../OneOrder/ConsumerInfo";
 import MenuInfo from "../OneOrder/MenuInfo";
+import OneOrderMenuHeader from "../OneOrder/OneOrderMenuHeader";
 
 export default class OrderPage extends Component {
   state = { order: [] };
@@ -31,7 +32,8 @@ export default class OrderPage extends Component {
     const { order } = this.state;
     return (
       <div className="order-wrapper">
-        <ConsumerInfo />
+        <ConsumerInfo order={order} />
+        <OneOrderMenuHeader />
         {order && <MenuInfo dishes={order.dishes} />}
       </div>
     );

@@ -3,13 +3,17 @@ import { Link } from "react-router-dom";
 import OrdersForm from "../OrdersForm/OrdersForm";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
+import css from "../OrdersForm/Form.module.css";
 
 const MainInfo = ({ orders }) => (
   <>
-    <div className="datePickerWrapper">
-      <Input customClass="none" type="text" id="dataPicker" />
+    <div className={css.tableContainer}>
+      <div className="datePickerWrapper">
+        <Input customClass="none" type="text" id="dataPicker" />
+      </div>
+      <OrdersForm orders={orders} />
     </div>
-    <OrdersForm orders={orders} />
+
     <Link
       to={{
         pathname: "/newOrder",

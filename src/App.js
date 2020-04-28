@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import NewOrder from "./components/Pages/NewOrder";
 import menu from "./data/menu";
 import * as localStorage from "./components/utils/localStorage";
-import OrderPage from "./components/Pages/OrderPage";
 import HomePage from "./components/Pages/HomePage";
 
 export default class App extends Component {
@@ -29,6 +28,15 @@ export default class App extends Component {
     const { orders } = this.state;
     this.setState({ orders: [...orders, newOrder] });
   };
+
+  menuMountResset = () => {
+    const { menu } = this.state;
+
+    const ressetMenu = menu.map((el) => ({ ...el, mount: 0 }));
+
+    this.setState({ menu: ressetMenu });
+  };
+
   render() {
     const { menu, orders } = this.state;
     return (
@@ -44,6 +52,7 @@ export default class App extends Component {
               <NewOrder
                 {...props}
                 menu={menu}
+                ressetMenu={this.menuMountResset}
                 onAddNewOrder={this.handleAddNewOrder}
               />
             )}
