@@ -2,7 +2,7 @@ import React from "react";
 import css from "./Form.module.css";
 
 const RowElement = ({ children }) => (
-  <td className={css.mainElement}>{children}</td>
+  <div className={css.mainElement}>{children}</div>
 );
 
 export default RowElement;

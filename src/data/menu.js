@@ -45,6 +45,21 @@ const menu = [
       Майонез: 30,
     },
   },
+  {
+    id: 4,
+    name: "Буржуй",
+    mount: 0,
+    img:
+      "https://img.povar.ru/main/b2/ad/3e/96/recept_salata_quotburjuiquot-411034.jpg",
+    ingridients: {
+      Помідори: 20,
+      Гриби: 20,
+      "Яйце куряче": 30,
+      "Куряче філе": 30,
+      Сир: 20,
+      Майонез: 30,
+    },
+  },
 ];
 
 export default menu;

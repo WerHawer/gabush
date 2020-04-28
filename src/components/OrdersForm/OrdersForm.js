@@ -4,10 +4,10 @@ import MainForm from "./MainForm";
 import css from "./Form.module.css";
 
 const OrdersForm = ({ orders }) => (
-  <table className={css.table}>
+  <div className={css.table}>
     <FormHeader />
     <MainForm orders={orders} />
-  </table>
+  </div>
 );
 
 export default OrdersForm;

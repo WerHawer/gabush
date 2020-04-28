@@ -29,13 +29,14 @@ export default class Counter extends Component {
   render() {
     const { counter } = this.state;
     return (
-      <div>
+      <div className="counter">
         <Button
           type="button"
-          name="counterIncrement"
-          onClick={this.handleIncrement}
+          name="counterDecrement"
+          onClick={this.handleDecrement}
+          customClass="counterBnt"
         >
-          +
+          -
         </Button>
 
         <Input
@@ -47,10 +48,11 @@ export default class Counter extends Component {
 
         <Button
           type="button"
-          name="counterDecrement"
-          onClick={this.handleDecrement}
+          name="counterIncrement"
+          onClick={this.handleIncrement}
+          customClass="counterBnt"
         >
-          -
+          +
         </Button>
       </div>
     );

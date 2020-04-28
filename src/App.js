@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import MainInfo from "./components/MainInfo/MainInfo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import NewOrder from "./components/Pages/NewOrder";
 import menu from "./data/menu";
 import * as localStorage from "./components/utils/localStorage";
+import OrderPage from "./components/Pages/OrderPage";
+import HomePage from "./components/Pages/HomePage";
 
 export default class App extends Component {
   state = { menu: [], orders: [] };
@@ -34,9 +35,8 @@ export default class App extends Component {
       <>
         <Switch>
           <Route
-            path="/"
-            exact
-            render={(props) => <MainInfo {...props} orders={orders} />}
+            path="/home"
+            render={(props) => <HomePage {...props} orders={orders} />}
           />
           <Route
             path="/newOrder"
@@ -48,7 +48,8 @@ export default class App extends Component {
               />
             )}
           />
-          <Redirect to="/" />
+          />
+          <Redirect to="/home" />
         </Switch>
       </>
     );

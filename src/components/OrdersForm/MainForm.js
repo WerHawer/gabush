@@ -3,26 +3,27 @@ import MainRow from "./MainRow";
 import css from "./Form.module.css";
 
 const MainForm = ({ orders }) => (
-  <tbody className={css.main}>
+  <ul className={css.main}>
     {orders.length > 0 ? (
       orders.map((el) => (
         <MainRow
           key={el.id}
+          id={el.id}
           room={el.room}
-          time={el.time}
+          date={el.date}
           name={el.name}
           guests={el.guests}
-          party={el.party}
+          comment={el.comment}
         />
       ))
     ) : (
-      <tr style={{ textAlign: "center", display: "block", paddingTop: "20px" }}>
-        <td style={{ textAlign: "center", display: "block" }}>
+      <li style={{ textAlign: "center", display: "block", paddingTop: "20px" }}>
+        <p style={{ textAlign: "center", display: "block" }}>
           На эту дату заказов нет
-        </td>
-      </tr>
+        </p>
+      </li>
     )}
-  </tbody>
+  </ul>
 );
 
 export default MainForm;
