@@ -41,7 +41,7 @@ const MenuList = ({
       </ul>
 
       <Button
-        type="submit"
+        type="button"
         name="saveDishes"
         onClick={() => onSaveClick(filteredMenu)}
         customClass="menu-list__saveBtn"

@@ -15,7 +15,7 @@ const Select = ({
     <div className="select-container">
       <label
         htmlFor={id}
-        className={`select-label ${!isLabelVisible && "none"}`}
+        className={`select-label ${isLabelVisible && "none"}`}
         onClick={() => setIsLabelVisible(false)}
       >
         {placeholder}

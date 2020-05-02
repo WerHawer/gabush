@@ -1,1 +1,1 @@
-export default [1, 2, 3];
+export default ["Выберите зал", 1, 2, 3];
