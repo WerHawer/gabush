@@ -2,7 +2,9 @@ import React from "react";
 import IngridientsEl from "./IngridientsEl";
 
 const Ingridients = ({ ingridients }) => {
-  const ingrKeys = Object.keys(ingridients);
+  const ingrKeys = Object.keys(ingridients).sort((a, b) =>
+    a.localeCompare(b, "ru")
+  );
 
   return (
     <>
