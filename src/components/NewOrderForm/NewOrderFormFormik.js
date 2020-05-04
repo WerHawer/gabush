@@ -14,10 +14,9 @@ import ConfirmDatePlugin from "flatpickr/dist/plugins/confirmDate/confirmDate";
 const dateValidation = (date = [], room = 0) => {
   let error = "";
   const orders = localStorage.load("orders") || [];
-  const roomIsExist = orders.filter((order) => order.room === room) || [];
-  const dateIsExist = roomIsExist.find(
-    (el) => Date.parse(el.selectedDates[0]) === Date.parse(date[0])
-  );
+  const dateIsExist = orders
+    .filter((order) => order.room === room)
+    .find((el) => Date.parse(el.selectedDates[0]) === Date.parse(date[0]));
 
   if (!date.length) {
     error = "Requaired";

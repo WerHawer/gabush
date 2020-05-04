@@ -1,11 +1,18 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import flatpickr from "flatpickr";
 import MainInfo from "../MainInfo/MainInfo";
 import OrderPage from "../Pages/OrderPage";
+import IngridientsSumm from "./IngridientsSumm";
 
 export default class HomePage extends Component {
-  state = { input: null, filteredOrders: [], filterDates: [] };
+  state = {
+    input: null,
+    filteredOrders: [],
+    filterDates: [],
+    dateStr: "",
+    ingridients: {},
+  };
 
   componentDidMount() {
     this.setState({ input: document.querySelector("#dataPicker") });
@@ -17,15 +24,22 @@ export default class HomePage extends Component {
         mode: "range",
         inline: true,
         dateFormat: "d.m.Y",
-        onReady: () => {
-          const H = new Date(Date.now()).getHours();
-          const M = new Date(Date.now()).getMinutes();
+        onReady: (selectedDates, dateStr, instance) => {
+          const pad = (str) => str.padStart(2, "0");
+          const Y = instance.now.getFullYear();
+          const D = pad(String(instance.now.getDate()));
+          const MO = pad(String(instance.now.getMonth() + 1));
+          const H = instance.now.getHours();
+          const M = instance.now.getMinutes();
           const ms = (H * 60 + M) * 60 * 1000;
 
           const startDate = Date.now() - ms;
           const endDate = startDate + 86400000;
 
-          this.setState({ filterDates: [startDate, endDate] });
+          this.setState({
+            filterDates: [startDate, endDate],
+            dateStr: `${D}.${MO}.${Y}`,
+          });
         },
         onChange: (selectedDates, dateStr, instance) => {
           if (selectedDates.length < 2) return;
@@ -33,7 +47,7 @@ export default class HomePage extends Component {
           const startDate = Date.parse(selectedDates[0]);
           const endDate = Date.parse(selectedDates[1]) + 86400000;
 
-          this.setState({ filterDates: [startDate, endDate] });
+          this.setState({ filterDates: [startDate, endDate], dateStr });
         },
       });
     }
@@ -41,7 +55,57 @@ export default class HomePage extends Component {
     if (prevState.filterDates !== this.state.filterDates) {
       this.filter();
     }
+
+    if (prevState.filteredOrders !== this.state.filteredOrders) {
+      this.getIngr();
+    }
   }
+
+  getIngr = () => {
+    const { filteredOrders } = this.state;
+
+    const allIngr = filteredOrders.reduce((all, order) => {
+      const ingrFromOneOrder = order.dishes.reduce(
+        (ingr, dish) => [...ingr, ...Object.keys(dish.ingridients)],
+        []
+      );
+      return [...all, ...ingrFromOneOrder];
+    }, []);
+
+    const unickIngr = allIngr.reduce(
+      (unick, ingr) => (unick.includes(ingr) ? unick : [...unick, ingr]),
+      []
+    );
+    this.getSummOfIngr(unickIngr);
+  };
+
+  getSummOfIngr = (unickIngr) => {
+    const { filteredOrders } = this.state;
+
+    let resultObj = {};
+
+    unickIngr.forEach((ingr) => {
+      filteredOrders.forEach(({ dishes }) => {
+        dishes.forEach(({ ingridients }) => {
+          if (ingridients[ingr]) {
+            if (resultObj[ingr]) {
+              resultObj = {
+                ...resultObj,
+                [ingr]: ingridients[ingr] + resultObj[ingr],
+              };
+            } else {
+              resultObj = {
+                ...resultObj,
+                [ingr]: ingridients[ingr],
+              };
+            }
+          }
+        });
+      });
+    });
+
+    this.setState({ ingridients: resultObj });
+  };
 
   filter = () => {
     const { orders } = this.props;
@@ -62,12 +126,24 @@ export default class HomePage extends Component {
   };
 
   render() {
-    const { filteredOrders } = this.state;
+    const { filteredOrders, dateStr, ingridients } = this.state;
     return (
       <div className="main-page">
         <div className="wrapper">
           <MainInfo orders={filteredOrders} />
-          <Route path="/home/order/:id" component={OrderPage} />
+          <Switch>
+            <Route path="/home/order/:id" component={OrderPage} />
+            <Route
+              path="/home/orderIngridients"
+              render={(props) => (
+                <IngridientsSumm
+                  {...props}
+                  date={dateStr}
+                  ingridients={ingridients}
+                />
+              )}
+            />
+          </Switch>
         </div>
       </div>
     );

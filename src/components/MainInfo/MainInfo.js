@@ -14,14 +14,20 @@ const MainInfo = ({ orders }) => (
       <OrdersForm orders={orders} />
     </div>
 
-    <Link
-      to={{
-        pathname: "/newOrder",
-      }}
-      className="link main-info__new-order--link"
-    >
-      <Button customClass="main-info__new-order--btn">Новый заказ</Button>
-    </Link>
+    <div className="main-info__btn-container">
+      <Link
+        to={{
+          pathname: "/newOrder",
+        }}
+        className="link"
+      >
+        <Button customClass="main-info__new-order--btn">Новый заказ</Button>
+      </Link>
+
+      <Link to="/home/orderIngridients" className="link">
+        <Button customClass="main-info__buy--btn">Закупки</Button>
+      </Link>
+    </div>
   </>
 );
 

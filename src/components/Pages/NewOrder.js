@@ -1,40 +1,14 @@
 import React, { Component } from "react";
 import MenuList from "../MenuList/MenuList";
-import NewOrderForm from "../NewOrderForm/NewOrderForm";
-import NewOrderFormFormik from "../NewOrderForm/NewOrderFormFormik";
 
-// const dateInput = createRef();
-// const telInput = createRef();
+import NewOrderFormFormik from "../NewOrderForm/NewOrderFormFormik";
 
 export default class NewOrder extends Component {
   state = {
     orderIsReady: false,
     isPrevInfoSave: false,
-    dateInput: null,
-    date: "",
-    name: "",
-    tel: "",
-    guests: "",
-    room: 1,
-    comment: "",
-    selectedDates: [],
     order: {},
   };
-
-  // componentDidMount() {
-  //   flatpickr("#dataPicker", {
-  //     enableTime: true,
-  //     time_24hr: true,
-  //     dateFormat: "d.m H:i",
-  //     onChange: (selectedDates, dateStr, instance) => {
-  //       this.setState({ selectedDates });
-  //     },
-  //   });
-
-  //   this.setState({ dateInput: dateInput.current });
-
-  //   Inputmask("+38 (099) 999-99-99").mask(telInput);
-  // }
 
   componentDidUpdate(prevProps, prevState) {
     const { onAddNewOrder } = this.props;
@@ -43,10 +17,6 @@ export default class NewOrder extends Component {
       onAddNewOrder(order);
     }
   }
-
-  // handleChange = (e) => {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // };
 
   handlePrevInfoSubmit = (obj) => {
     this.setState({
@@ -116,7 +86,6 @@ export default class NewOrder extends Component {
           {!isPrevInfoSave && (
             <>
               <NewOrderFormFormik onFormSubmit={this.handlePrevInfoSubmit} />
-              {/* <NewOrderForm onFormSubmit={this.handlePrevInfoSubmit} /> */}
             </>
           )}
 
