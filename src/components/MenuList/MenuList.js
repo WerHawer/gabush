@@ -13,24 +13,18 @@ const MenuList = ({
   onSaveClick,
   notificationOk,
   orderIsReady,
-  ressetMenu,
 }) => (
   <>
     {orderIsReady && (
       <Notification
         onClick={() => {
           notificationOk();
-          ressetMenu();
         }}
       />
     )}
 
     <div className="menu-list__wrapper">
-      <Link
-        to="/home"
-        className="newOrder__toMain-link"
-        onClick={() => ressetMenu()}
-      >
+      <Link to="/home" className="newOrder__toMain-link">
         <Button type="button">На главнаю</Button>
       </Link>
 

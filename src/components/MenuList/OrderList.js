@@ -6,12 +6,15 @@ const OrderList = ({ menu, order }) => {
 
   return (
     <div className="orderList">
-      <div className="orderList__order-info">
-        <p className="order-info__time">{order.date}</p>
-        <p className="order-info__name"> {order.name}</p>
-        <p className="order-info__room">Зал: {order.room}</p>{" "}
-        <p className="order-info__guests">Гостей: {Number(order.guests)}</p>
-      </div>
+      {order && (
+        <div className="orderList__order-info">
+          <p className="order-info__time">{order.date}</p>
+          <p className="order-info__name"> {order.name}</p>
+          <p className="order-info__room">Зал: {order.room}</p>{" "}
+          <p className="order-info__guests">Гостей: {Number(order.guests)}</p>
+        </div>
+      )}
+
       <ul className="orderList-dishes-list">
         {menu.length > 0 ? (
           menu.map((el, index) => (

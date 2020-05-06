@@ -4,60 +4,22 @@ import NewOrder from "./components/Pages/NewOrder";
 import menu from "./data/menu";
 import * as localStorage from "./components/utils/localStorage";
 import HomePage from "./components/Pages/HomePage";
+import OrderEdit from "./components/Pages/OrderEdit";
 
 export default class App extends Component {
-  state = { menu: [], orders: [] };
+  state = {};
 
   componentDidMount() {
-    this.setState({ menu: [...menu] });
-
-    const ordersLS = localStorage.load("orders");
-
-    if (ordersLS) {
-      this.setState({ orders: ordersLS });
-    }
+    localStorage.save("gabushMenu", menu);
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.orders !== this.state.orders) {
-      localStorage.save("orders", this.state.orders);
-    }
-  }
-
-  handleAddNewOrder = (newOrder) => {
-    const { orders } = this.state;
-    this.setState({ orders: [...orders, newOrder] });
-  };
-
-  menuMountResset = () => {
-    const { menu } = this.state;
-
-    const ressetMenu = menu.map((el) => ({ ...el, mount: 0 }));
-
-    this.setState({ menu: ressetMenu });
-  };
 
   render() {
-    const { menu, orders } = this.state;
     return (
       <>
         <Switch>
-          <Route
-            path="/home"
-            render={(props) => <HomePage {...props} orders={orders} />}
-          />
-          <Route
-            path="/newOrder"
-            render={(props) => (
-              <NewOrder
-                {...props}
-                menu={menu}
-                ressetMenu={this.menuMountResset}
-                onAddNewOrder={this.handleAddNewOrder}
-              />
-            )}
-          />
-          />
+          <Route path="/home" component={HomePage} />
+          <Route path="/newOrder" component={NewOrder} />
+          <Route path="/orderEdit" component={OrderEdit} />
           <Redirect to="/home" />
         </Switch>
       </>

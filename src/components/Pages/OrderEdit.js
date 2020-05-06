@@ -1,48 +1,61 @@
 import React, { Component } from "react";
 import MenuList from "../MenuList/MenuList";
-import NewOrderFormFormik from "../NewOrderForm/NewOrderFormFormik";
 import * as localStorage from "../utils/localStorage";
 
-export default class NewOrder extends Component {
+export default class OrderEdit extends Component {
   state = {
     orderIsReady: false,
-    isPrevInfoSave: false,
     order: {},
     orders: [],
     menu: [],
   };
 
   componentDidMount() {
+    const { location, history } = this.props;
+    if (!location.state) {
+      history.push("/home");
+    }
     const menuLS = localStorage.load("gabushMenu") || [];
     const ordersLS = localStorage.load("orders") || [];
-
-    this.setState({ menu: menuLS, orders: ordersLS });
+    this.setState({ menu: menuLS, orders: ordersLS, order: location.state });
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { order } = this.state;
 
     if (prevState.order.dishes !== order.dishes) {
-      this.handleAddNewOrder(order);
+      this.handleRefreshOrder();
     }
 
     if (prevState.orders !== this.state.orders) {
       localStorage.save("orders", this.state.orders);
     }
+
+    if (prevState.menu !== this.state.menu) {
+      this.getActualMenu();
+    }
   }
 
-  handlePrevInfoSubmit = (obj) => {
-    this.setState({
-      order: {
-        ...obj,
-      },
-      isPrevInfoSave: true,
+  getActualMenu = () => {
+    const { order, menu } = this.state;
+
+    order.dishes.forEach((dish) => {
+      menu.forEach((el) => {
+        if (dish.id === el.id) {
+          el.mount = dish.mount;
+          this.setState({ menu });
+        }
+      });
     });
   };
 
-  handleAddNewOrder = (newOrder) => {
-    const { orders } = this.state;
-    this.setState({ orders: [...orders, newOrder] });
+  handleRefreshOrder = () => {
+    const { order } = this.state;
+    this.setState((prevState) => {
+      return {
+        orders: [...prevState.orders.filter((el) => el.id !== order.id), order],
+      };
+    });
   };
 
   onDishClick = (e) => {
@@ -94,29 +107,21 @@ export default class NewOrder extends Component {
   };
 
   render() {
-    const { isPrevInfoSave, order, orderIsReady, menu } = this.state;
+    const { order, orderIsReady, menu } = this.state;
 
     const filteredMenu = this.filter(menu);
     return (
       <div className="newOrder">
         <div className="wrapper">
-          {!isPrevInfoSave && (
-            <>
-              <NewOrderFormFormik onFormSubmit={this.handlePrevInfoSubmit} />
-            </>
-          )}
-
-          {isPrevInfoSave && (
-            <MenuList
-              notificationOk={this.orderIsReadyResset}
-              orderIsReady={orderIsReady}
-              onSaveClick={this.handleSaveDishes}
-              order={order}
-              menu={menu}
-              filteredMenu={filteredMenu}
-              onClick={this.onDishClick}
-            />
-          )}
+          <MenuList
+            notificationOk={this.orderIsReadyResset}
+            orderIsReady={orderIsReady}
+            onSaveClick={this.handleSaveDishes}
+            order={order}
+            menu={menu}
+            filteredMenu={filteredMenu}
+            onClick={this.onDishClick}
+          />
         </div>
       </div>
     );

@@ -4,6 +4,7 @@ import flatpickr from "flatpickr";
 import MainInfo from "../MainInfo/MainInfo";
 import OrderPage from "../Pages/OrderPage";
 import IngridientsSumm from "./IngridientsSumm";
+import * as localStorage from "../utils/localStorage";
 
 export default class HomePage extends Component {
   state = {
@@ -12,10 +13,15 @@ export default class HomePage extends Component {
     filterDates: [],
     dateStr: "",
     ingridients: {},
+    orders: [],
   };
 
   componentDidMount() {
-    this.setState({ input: document.querySelector("#dataPicker") });
+    const ordersLS = localStorage.load("orders") || [];
+    this.setState({
+      input: document.querySelector("#dataPicker"),
+      orders: ordersLS,
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -108,8 +114,7 @@ export default class HomePage extends Component {
   };
 
   filter = () => {
-    const { orders } = this.props;
-    const { filterDates } = this.state;
+    const { filterDates, orders } = this.state;
     let filteredOrders;
 
     filteredOrders = orders

@@ -5,6 +5,12 @@ import Input from "../UI/Input";
 export default class Counter extends Component {
   state = { counter: 0 };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.mount !== this.props.mount) {
+      this.setState({ counter: this.props.mount });
+    }
+  }
+
   handleIncrement = (e) => {
     this.setState((prevState) => {
       return { counter: prevState.counter + 1 };

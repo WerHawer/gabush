@@ -7,7 +7,7 @@ const MenuElement = ({ el, onClick }) => (
     <p className="menu-list__element-name">
       {el.name} {el.price}грн./шт.
     </p>
-    <Counter onClick={onClick} />
+    <Counter onClick={onClick} mount={el.mount} />
   </li>
 );
 

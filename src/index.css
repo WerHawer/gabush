@@ -351,7 +351,6 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .ConsumerInfoEl {
-  display: inline-block;
   padding: 0 30px;
   border-right: 2px solid #6e6e73;
 }
@@ -421,6 +420,10 @@ input[type="number"]::-webkit-outer-spin-button {
   border-right: none;
 }
 /* ONE ORDER END */
+
+/* ONE ORDER EDIT START */
+
+/* ONE ORDER EDIT END */
 
 /* INGR START */
 
