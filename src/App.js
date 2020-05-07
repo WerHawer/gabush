@@ -15,14 +15,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <>
-        <Switch>
-          <Route path="/home" component={HomePage} />
-          <Route path="/newOrder" component={NewOrder} />
-          <Route path="/orderEdit" component={OrderEdit} />
-          <Redirect to="/home" />
-        </Switch>
-      </>
+      <Switch>
+        <Route path="/home" component={HomePage} />
+        <Route path="/newOrder" component={NewOrder} />
+        <Route path="/orderEdit" component={OrderEdit} />
+        <Redirect to="/home" />
+      </Switch>
     );
   }
 }

@@ -37,7 +37,7 @@ const OrderList = ({
   }, []);
 
   useEffect(() => {
-    if (timer) {
+    if (timer && isEdit) {
       timer.setDate(order.selectedDates);
     }
   }, [order]);
@@ -47,11 +47,19 @@ const OrderList = ({
       {order && (
         <div className="orderList__order-info">
           <p className="order-info__time">
-            {isEdit ? <Input id="dataPicker" /> : `${order.date}`}
+            {isEdit ? (
+              <Input id="dataPicker" customClass="orderEdit-input ta-center" />
+            ) : (
+              `${order.date}`
+            )}
           </p>
           <p className="order-info__name">
             {isEdit ? (
-              <Input value={order.name} onChange={(e) => onChange(e, "name")} />
+              <Input
+                value={order.name}
+                onChange={(e) => onChange(e, "name")}
+                customClass="orderEdit-input ta-center"
+              />
             ) : (
               `${order.name}`
             )}
@@ -59,7 +67,11 @@ const OrderList = ({
           <p className="order-info__room">
             Зал:{" "}
             {isEdit ? (
-              <Input value={order.room} onChange={(e) => onChange(e, "room")} />
+              <Input
+                value={order.room}
+                onChange={(e) => onChange(e, "room")}
+                customClass="orderEdit-input"
+              />
             ) : (
               `${order.room}`
             )}
@@ -70,6 +82,7 @@ const OrderList = ({
               <Input
                 value={order.guests}
                 onChange={(e) => onChange(e, "guests")}
+                customClass="orderEdit-input"
               />
             ) : (
               Number(`${order.guests}`)
