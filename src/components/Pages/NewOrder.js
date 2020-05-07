@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MenuList from "../MenuList/MenuList";
 import NewOrderFormFormik from "../NewOrderForm/NewOrderFormFormik";
 import * as localStorage from "../utils/localStorage";
+import OrderList from "../MenuList/OrderList";
 
 export default class NewOrder extends Component {
   state = {
@@ -79,6 +80,15 @@ export default class NewOrder extends Component {
     }
   };
 
+  onDeleteDishFromList = (e) => {
+    const { menu } = this.state;
+    const card = e.target.closest("li");
+
+    const choosen = menu.find((el) => card.id === String(el.id));
+    choosen.mount = 0;
+    this.setState({ menu });
+  };
+
   handleSaveDishes = (dishes) => {
     const { order, orderIsReady } = this.state;
 
@@ -107,15 +117,22 @@ export default class NewOrder extends Component {
           )}
 
           {isPrevInfoSave && (
-            <MenuList
-              notificationOk={this.orderIsReadyResset}
-              orderIsReady={orderIsReady}
-              onSaveClick={this.handleSaveDishes}
-              order={order}
-              menu={menu}
-              filteredMenu={filteredMenu}
-              onClick={this.onDishClick}
-            />
+            <>
+              <MenuList
+                notificationOk={this.orderIsReadyResset}
+                orderIsReady={orderIsReady}
+                onSaveClick={this.handleSaveDishes}
+                order={order}
+                menu={menu}
+                filteredMenu={filteredMenu}
+                onClick={this.onDishClick}
+              />
+              <OrderList
+                menu={filteredMenu}
+                order={order}
+                onDelClick={this.onDeleteDishFromList}
+              />
+            </>
           )}
         </div>
       </div>

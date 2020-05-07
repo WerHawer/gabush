@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import MenuList from "../MenuList/MenuList";
 import * as localStorage from "../utils/localStorage";
+import OrderList from "../MenuList/OrderList";
 
 export default class OrderEdit extends Component {
   state = {
+    isEdit: true,
     orderIsReady: false,
     order: {},
     orders: [],
@@ -86,10 +88,19 @@ export default class OrderEdit extends Component {
 
       const choosen = menu.find((el) => card.id === String(el.id));
       choosen.mount = Number(e.target.value);
-      this.setState({ menu: [...menu] });
+      this.setState({ menu });
 
       return;
     }
+  };
+
+  onDeleteDishFromList = (e) => {
+    const { menu } = this.state;
+    const card = e.target.closest("li");
+
+    const choosen = menu.find((el) => card.id === String(el.id));
+    choosen.mount = 0;
+    this.setState({ menu });
   };
 
   handleSaveDishes = (dishes) => {
@@ -106,12 +117,24 @@ export default class OrderEdit extends Component {
     this.setState({ orderIsReady: false });
   };
 
+  onConsumerInfoChange = (e, name) => {
+    const { order } = this.state;
+
+    this.setState({ order: { ...order, [name]: e.target.value } });
+  };
+
+  onConsumerDateChange = (dateStr, selectedDates) => {
+    const { order } = this.state;
+
+    this.setState({ order: { ...order, date: dateStr, selectedDates } });
+  };
+
   render() {
-    const { order, orderIsReady, menu } = this.state;
+    const { order, orderIsReady, menu, isEdit } = this.state;
 
     const filteredMenu = this.filter(menu);
     return (
-      <div className="newOrder">
+      <div className="orderEdit">
         <div className="wrapper">
           <MenuList
             notificationOk={this.orderIsReadyResset}
@@ -121,6 +144,15 @@ export default class OrderEdit extends Component {
             menu={menu}
             filteredMenu={filteredMenu}
             onClick={this.onDishClick}
+            isEdit={isEdit}
+          />
+          <OrderList
+            menu={filteredMenu}
+            order={order}
+            isEdit={isEdit}
+            onChange={this.onConsumerInfoChange}
+            onDateChange={this.onConsumerDateChange}
+            onDelClick={this.onDeleteDishFromList}
           />
         </div>
       </div>

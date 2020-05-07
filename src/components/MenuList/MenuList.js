@@ -1,27 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import MenuElement from "./MenuElement";
-import OrderList from "./OrderList";
 import Button from "../UI/Button";
 import Notification from "./Notification";
 
 const MenuList = ({
-  order,
   menu,
   filteredMenu,
   onClick,
   onSaveClick,
   notificationOk,
   orderIsReady,
+  isEdit,
 }) => (
   <>
-    {orderIsReady && (
-      <Notification
-        onClick={() => {
-          notificationOk();
-        }}
-      />
-    )}
+    {orderIsReady && <Notification onClick={notificationOk} isEdit={isEdit} />}
 
     <div className="menu-list__wrapper">
       <Link to="/home" className="newOrder__toMain-link">
@@ -43,8 +36,6 @@ const MenuList = ({
         сохранить
       </Button>
     </div>
-
-    <OrderList menu={filteredMenu} order={order} />
   </>
 );
 
