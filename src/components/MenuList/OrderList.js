@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import OrderListElement from "./OrderListElement";
 import Input from "../UI/Input";
 import flatpickr from "flatpickr";
@@ -14,24 +14,32 @@ const OrderList = ({
 }) => {
   const allPrice = menu.reduce((acc, el) => acc + el.price * el.mount, 0);
 
+  const [isTimegtted, setIsTimegtted] = useState(false);
+  const [timer, setTimer] = useState(null);
+
   useEffect(() => {
-    flatpickr("#dataPicker", {
-      enableTime: true,
-      time_24hr: true,
-      dateFormat: "d.m H:i",
-      plugins: [
-        new ConfirmDatePlugin({
-          confirmText: "ИЗМЕНИТЬ",
-          theme: "light",
-        }),
-      ],
-      onReady: (selectedDates, dateStr, instance) => {
-        instance.setDate(order.date);
-      },
-      onChange: (selectedDates, dateStr, instance) => {
-        onDateChange(dateStr, selectedDates);
-      },
-    });
+    setTimer(
+      flatpickr("#dataPicker", {
+        enableTime: true,
+        time_24hr: true,
+        dateFormat: "d.m H:i",
+        plugins: [
+          new ConfirmDatePlugin({
+            confirmText: "ИЗМЕНИТЬ",
+            theme: "light",
+          }),
+        ],
+        onChange: (selectedDates, dateStr, instance) => {
+          onDateChange(dateStr, selectedDates);
+        },
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    if (timer) {
+      timer.setDate(order.selectedDates);
+    }
   }, [order]);
 
   return (
